@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+
+    <title>Dino 2</title>
+
+  </head>
+
+
+  <body bgcolor="black">
+
+    <canvas id='canvas' width="1200" height="600"></canvas>
+
+    <style>
+      canvas {
+        background: pink;
+        border: 3px solid red;
+        border-radius: 10px;
+      }
+    </style>
+  
+    <script>
+      var c1 = [0, 1, 1200];
+      var c2 = [0, 2, 1200];
+      var c3 = [0, 1, 1200];
+      var y = 430;
+      var proc = 0.1;
+      var speed_kaktus = 30;
+      var canvas = document.getElementById('canvas');
+      var cx = canvas.getContext('2d');
+      var dino1 = new Image();
+      var dino2 = new Image();
+      var kaktus1 = new Image();
+      var kaktus2 = new Image();
+      var gameover = new Image();
+      gameover.src = 'game_over.bmp';
+      dino1.src = 'dino.png';
+      dino2.src = 'dino1.png';
+      kaktus1.src = 'kaktus.png';
+      kaktus2.src = 'kaktus2.png';
+      var z = true;
+       var prizok = false;
+       var dy = -30;
+      canvas.addEventListener('mousedown', function(){
+
+        if (!prizok) {prizok = true; y = y + dy;}
+
+      });
+
+      canvas.addEventListener('mouseup', function(){
+
+        if (dy < 0) {dy = -1 * dy;}
+
+      })
+
+      kaktus2.addEventListener('load', function(){
+
+        dd = setInterval(function(){
+          if (prizok && y > 430) {prizok = false; y = 430; dy = -30;}
+          if (prizok && y <= 430) {
+
+            dy = dy + 3;
+            y = y + dy;
+
+          }
+
+          if (false) {
+            clearInterval(dd);
+            cx.drawImage(gameover, 0, 0);
+          }
+
+          cx.clearRect(0, 0, 1200, 600);
+          if (z) {
+            cx.drawImage(dino1, 50, y);
+          }
+          else {
+            cx.drawImage(dino2, 50, y);
+          }
+          if (z) {z = false;} else {z = true}
+    
+               
+          if (c1[2] < -200) {c1[0] = 0;}   
+          if (c2[2] < -200) {c2[0] = 0;}
+          if (c3[2] < -200) {c3[0] = 0;}
+          
+          if (c1[0] == 1) {c1[2] = c1[2] - speed_kaktus; 
+            if (c1[1] == 1) {cx.drawImage(kaktus1, c1[2], 525);}
+            else {cx.drawImage(kaktus2, c1[2], 500);}
+          ;}       
+          if (c2[0] == 1) {c2[2] = c2[2] - speed_kaktus;
+            if (c2[1] == 1) {cx.drawImage(kaktus1, c2[2], 525);}
+            else {cx.drawImage(kaktus2, c2[2], 500);}
+          ;}
+          if (c3[0] == 1) {c3[2] = c3[2] - speed_kaktus;
+            if (c3[1] == 1) {cx.drawImage(kaktus1, c3[2], 525);}
+            else {cx.drawImage(kaktus2, c3[2], 500);}
+          ;}
+
+          if (c1[0] == 0) {
+            if (Math.random() < proc) {
+              c1[0] = 1;
+              if (Math.random() < 0.5) {c1[1] = 1;} else {c1[1] = 2;}
+              c1[2] = 1200;
+            }
+          }
+          if (c2[0] == 0) {
+            if (Math.random() < proc) {
+              c2[0] = 1;
+              if (Math.random() < 0.5) {c2[1] = 1;} else {c2[1] = 2;}
+              c2[2] = 1200;
+            }
+          }
+          if (c3[0] == 0) {
+            if (Math.random() < proc) {
+              c3[0] = 1;
+              if (Math.random() < 0.5) {c3[1] = 1;} else {c3[1] = 2;}
+              c3[2] = 1200;
+            }
+          }
+
+        }, 100);
+
+
+      });  
+
+    </script>
+
+  </body>
+
+</html>
